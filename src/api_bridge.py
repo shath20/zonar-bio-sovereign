@@ -1,14 +1,18 @@
-"""FastAPI bridge for n8n / HTTP webhook integration."""
+"""ZONAR - FastAPI bridge for n8n / HTTP webhook integration + Dashboard."""
 from fastapi import FastAPI, HTTPException
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 from pydantic import BaseModel
 import os
-from src.main import BioSovereignProtocol
+from src.main import ZonarProtocol
 from src.config import DATA_DIR
 
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
 app = FastAPI(
-    title="Bio-Sovereign Radio Protocol API",
-    description="HTTP interface for acoustic breach detection and enforcement",
-    version="1.0.0"
+    title="ZONAR API",
+    description="Zonal Ocean Noise Analysis & Response - HTTP interface",
+    version="2.0.0"
 )
 
 protocol = None
@@ -17,7 +21,7 @@ protocol = None
 def get_protocol():
     global protocol
     if protocol is None:
-        protocol = BioSovereignProtocol()
+        protocol = ZonarProtocol()
     return protocol
 
 
@@ -53,7 +57,21 @@ async def get_vessel_status(vessel_id: str):
 
 @app.get("/health")
 async def health():
-    return {"status": "operational", "protocol": "Bio-Sovereign Radio Protocol"}
+    return {"status": "operational", "protocol": "ZONAR"}
+
+
+# Serve audio files from data directory
+app.mount("/audio", StaticFiles(directory=DATA_DIR), name="audio")
+
+# Serve the dashboard
+static_dir = os.path.join(BASE_DIR, "static")
+app.mount("/static", StaticFiles(directory=static_dir), name="static")
+
+
+@app.get("/")
+async def dashboard():
+    """Serve the main dashboard."""
+    return FileResponse(os.path.join(static_dir, "index.html"))
 
 
 if __name__ == "__main__":

@@ -1,4 +1,4 @@
-"""Autonomous Negotiator - RAG-powered SMCP advisory generator."""
+"""ZONAR Autonomous Negotiator - RAG-powered SMCP advisory generator."""
 import os
 from src.config import GOOGLE_API_KEY
 
@@ -34,7 +34,7 @@ class AutonomousNegotiator:
         results = self.rag.query(query)
         context = "\n".join(results["documents"][0]) if results["documents"] else ""
 
-        prompt = f"""You are the Bio-Sovereign Radio Protocol Autonomous Negotiator.
+        prompt = f"""You are the ZONAR (Zonal Ocean Noise Analysis & Response) Autonomous Negotiator.
 A vessel has breached an acoustic boundary in a marine protected area.
 
 VESSEL: {vessel_info['name']} (ID: {vessel_info['id']})
@@ -66,7 +66,7 @@ Provide ONLY the radio broadcast text. Start with the vessel callsign."""
         return (
             f"SECURITE, SECURITE, SECURITE. "
             f"{vessel_info['name']}, {vessel_info['name']}, "
-            f"this is Bio-Sovereign Protocol Control. "
+            f"this is ZONAR Control. "
             f"You are in violation of UNCLOS Article 192 - marine environment "
             f"protection. Acoustic Masking Index threshold exceeded. "
             f"Advise you reduce speed to minimum steerage way immediately. "

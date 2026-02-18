@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZONAR — Zonal Ocean Noise Analysis & Response</title>
+    <meta name="description"
+        content="ZONAR: Decentralized acoustic defense network protecting marine life through real-time enforcement of acoustic boundaries.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+
+    <!-- Animated Ocean Background -->
+    <div class="ocean-bg">
+        <div class="wave wave-1"></div>
+        <div class="wave wave-2"></div>
+        <div class="wave wave-3"></div>
+        <div class="particles" id="particles"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-brand">
+            <span class="nav-icon">🌊</span>
+            <span class="nav-title">ZONAR</span>
+        </div>
+        <div class="nav-links">
+            <a href="#problem" class="nav-link">The Problem</a>
+            <a href="#pipeline" class="nav-link">Live Demo</a>
+            <a href="#ledger" class="nav-link">Blue Ledger</a>
+            <a href="#about" class="nav-link">About</a>
+        </div>
+        <div class="nav-status">
+            <span class="status-dot"></span>
+            <span>SYSTEM ONLINE</span>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="hero">
+        <div class="hero-content">
+            <div class="hero-badge">SDG 14 — Life Below Water</div>
+            <h1 class="hero-title">
+                <span class="title-line">The Ocean is</span>
+                <span class="title-line title-accent">Losing Its Voice</span>
+            </h1>
+            <p class="hero-subtitle">
+                Industrial shipping noise masks the communication of <strong>baleen whales</strong>,
+                disorients <strong>sea turtles</strong>, and disrupts entire marine ecosystems.
+                Over <strong>60,000 ships</strong> cross the oceans daily — many with their
+                AIS transponders intentionally disabled.
+            </p>
+            <p class="hero-subtitle hero-solution">
+                <strong>ZONAR</strong> (Zonal Ocean Noise Analysis & Response) is the world's first decentralized
+                acoustic
+                defense network that grants marine life <em>Digital Sovereignty</em> — detecting noise breaches,
+                identifying ghost vessels, and broadcasting legally-grounded VHF advisories in real-time.
+            </p>
+            <div class="hero-stats">
+                <div class="stat-card">
+                    <div class="stat-number">120<span class="stat-unit">dB</span></div>
+                    <div class="stat-label">Whale Masking Threshold</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">60K<span class="stat-unit">+</span></div>
+                    <div class="stat-label">Ships Daily</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">30<span class="stat-unit">%</span></div>
+                    <div class="stat-label">Go "Dark" (No AIS)</div>
+                </div>
+            </div>
+            <a href="#pipeline" class="hero-cta">
+                <span>Launch Live Demo</span>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                </svg>
+            </a>
+        </div>
+    </section>
+
+    <!-- Problem Visualization -->
+    <section class="problem-section" id="problem">
+        <h2 class="section-title">How Acoustic Pollution Destroys Marine Life</h2>
+        <div class="problem-grid">
+            <div class="problem-card">
+                <div class="problem-icon">🐋</div>
+                <h3>Baleen Whales</h3>
+                <p>Low-frequency engine noise (20-200Hz) directly overlaps with whale communication bands, causing
+                    <strong>acoustic masking</strong> that prevents mothers from finding calves across distances.
+                </p>
+                <div class="threat-bar">
+                    <div class="threat-fill" style="width:85%"></div>
+                </div>
+                <span class="threat-label">Threat Level: Critical</span>
+            </div>
+            <div class="problem-card">
+                <div class="problem-icon">🐢</div>
+                <h3>Sea Turtles</h3>
+                <p>Olive Ridley turtles rely on acoustic cues (100Hz-1kHz) for navigation. Continuous noise above
+                    <strong>160 dB</strong> causes behavioral disruption and disorientation during nesting.
+                </p>
+                <div class="threat-bar">
+                    <div class="threat-fill" style="width:70%"></div>
+                </div>
+                <span class="threat-label">Threat Level: High</span>
+            </div>
+            <div class="problem-card">
+                <div class="problem-icon">👻</div>
+                <h3>Ghost Vessels</h3>
+                <p>Up to 30% of ships disable AIS transponders to avoid detection, creating <strong>invisible acoustic
+                        pollution</strong> with zero accountability in marine protected areas.</p>
+                <div class="threat-bar">
+                    <div class="threat-fill" style="width:90%"></div>
+                </div>
+                <span class="threat-label">Threat Level: Severe</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Live Pipeline Demo -->
+    <section class="pipeline-section" id="pipeline">
+        <h2 class="section-title">Live Pipeline Demo</h2>
+        <p class="section-desc">Watch the ZONAR Protocol process an acoustic breach in real-time</p>
+
+        <!-- Trigger Controls -->
+        <div class="trigger-panel">
+            <div class="trigger-header">
+                <span class="trigger-icon">📡</span>
+                <h3>Hydrophone Trigger</h3>
+            </div>
+            <div class="trigger-controls">
+                <div class="input-group">
+                    <label>Vessel ID</label>
+                    <select id="vessel-select">
+                        <option value="GHOST">👻 Ghost Vessel (No AIS)</option>
+                        <option value="V-1234">🚢 MV Bering Star</option>
+                        <option value="V-5678">🚢 MV Oceanic Spirit</option>
+                    </select>
+                </div>
+                <button class="trigger-btn" id="trigger-btn" onclick="triggerBreach()">
+                    <span class="btn-pulse"></span>
+                    <span>⚡ TRIGGER BREACH</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Pipeline Steps -->
+        <div class="pipeline-steps" id="pipeline-steps">
+            <div class="step" id="step-1" data-step="1">
+                <div class="step-header">
+                    <div class="step-number">01</div>
+                    <div class="step-info">
+                        <h4>Neural Ear — Spectral Subtraction</h4>
+                        <p>Isolating mechanical hull vibrations from ambient ocean noise</p>
+                    </div>
+                    <div class="step-status" id="status-1">WAITING</div>
+                </div>
+                <div class="step-detail" id="detail-1">
+                    <div class="spectrogram-viz" id="spectrogram">
+                        <canvas id="spectro-canvas" width="600" height="120"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="step" id="step-2" data-step="2">
+                <div class="step-header">
+                    <div class="step-number">02</div>
+                    <div class="step-info">
+                        <h4>Acoustic DNA — Fingerprinting</h4>
+                        <p>Extracting unique vessel identity from audio features</p>
+                    </div>
+                    <div class="step-status" id="status-2">WAITING</div>
+                </div>
+                <div class="step-detail" id="detail-2">
+                    <div class="dna-viz" id="dna-viz"></div>
+                </div>
+            </div>
+
+            <div class="step" id="step-3" data-step="3">
+                <div class="step-header">
+                    <div class="step-number">03</div>
+                    <div class="step-info">
+                        <h4>AIS Cross-Reference</h4>
+                        <p>Checking transponder status — Ghost Vessel detection</p>
+                    </div>
+                    <div class="step-status" id="status-3">WAITING</div>
+                </div>
+                <div class="step-detail" id="detail-3">
+                    <div class="ais-result" id="ais-result"></div>
+                </div>
+            </div>
+
+            <div class="step" id="step-4" data-step="4">
+                <div class="step-header">
+                    <div class="step-number">04</div>
+                    <div class="step-info">
+                        <h4>RAG Negotiator — VHF Advisory</h4>
+                        <p>Generating SMCP-compliant radio broadcast via AI + Legal Context</p>
+                    </div>
+                    <div class="step-status" id="status-4">WAITING</div>
+                </div>
+                <div class="step-detail" id="detail-4">
+                    <div class="radio-panel" id="radio-panel">
+                        <div class="radio-header">
+                            <span class="radio-icon">📻</span>
+                            <span>VHF Channel 16 — BROADCAST</span>
+                            <span class="radio-freq">156.800 MHz</span>
+                        </div>
+                        <div class="radio-text" id="radio-text"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="step" id="step-5" data-step="5">
+                <div class="step-header">
+                    <div class="step-number">05</div>
+                    <div class="step-info">
+                        <h4>Blue Ledger — Enforcement</h4>
+                        <p>Updating Acoustic Credit Score & risk premium</p>
+                    </div>
+                    <div class="step-status" id="status-5">WAITING</div>
+                </div>
+                <div class="step-detail" id="detail-5">
+                    <div class="acs-display" id="acs-display"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blue Ledger Section -->
+    <section class="ledger-section" id="ledger">
+        <h2 class="section-title">Blue Ledger — Acoustic Credit Scores</h2>
+        <p class="section-desc">Every vessel's acoustic performance is permanently recorded</p>
+        <div class="ledger-table-wrap">
+            <table class="ledger-table" id="ledger-table">
+                <thead>
+                    <tr>
+                        <th>Vessel</th>
+                        <th>ID</th>
+                        <th>ACS</th>
+                        <th>Violations</th>
+                        <th>Risk Premium</th>
+                        <th>Last Violation</th>
+                    </tr>
+                </thead>
+                <tbody id="ledger-body">
+                    <tr class="ledger-empty">
+                        <td colspan="6">No vessels in ledger yet. Trigger a breach above to populate.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about-section" id="about">
+        <h2 class="section-title">About ZONAR</h2>
+        <p class="section-desc">Understanding the project — explained simply</p>
+
+        <div class="about-content">
+            <div class="about-card about-main">
+                <div class="about-icon">💡</div>
+                <h3>What is ZONAR?</h3>
+                <p>
+                    Imagine you're trying to talk to your friend in a noisy cafeteria. The louder the noise,
+                    the harder it is to hear each other. <strong>Now imagine that's happening underwater</strong> —
+                    but instead of you and your friend, it's a <strong>mother whale trying to find her baby</strong>.
+                </p>
+                <p>
+                    Every day, <strong>60,000+ cargo ships</strong> cross the world's oceans. Their engines produce
+                    a deep rumbling noise that travels hundreds of kilometers underwater. This noise sits in the
+                    <strong>exact same frequency range</strong> that whales use to communicate (20–200 Hz). It's like
+                    someone blasting a loudspeaker right next to your ear — 24/7.
+                </p>
+                <p>
+                    <strong>ZONAR</strong> is like a <em>speed camera for the ocean</em> — but instead of catching
+                    cars going too fast, it catches ships being too loud, and tells them to quiet down using
+                    international law and AI.
+                </p>
+            </div>
+
+            <div class="about-card">
+                <div class="about-icon">🔊</div>
+                <h3>What is Acoustic Masking?</h3>
+                <p>
+                    Ship engine noise (20-200Hz) directly overlaps with whale communication bands. This is called
+                    <strong>acoustic masking</strong> — the ship noise literally drowns out the voices of marine
+                    animals.
+                    Whales can't find their calves. Sea turtles lose their navigation sense. Entire ecosystems collapse.
+                </p>
+            </div>
+
+            <div class="about-card">
+                <div class="about-icon">👻</div>
+                <h3>What are Ghost Vessels?</h3>
+                <p>
+                    Up to <strong>30% of ships</strong> intentionally turn off their AIS tracking transponders so nobody
+                    knows they're there. These are called <strong>Ghost Vessels</strong> — they cause all the acoustic
+                    damage with zero accountability. ZONAR detects them through their sound alone.
+                </p>
+            </div>
+        </div>
+
+        <!-- How It Works -->
+        <div class="how-it-works">
+            <h3 class="subsection-title">How ZONAR Works — Step by Step</h3>
+            <div class="works-grid">
+                <div class="works-step">
+                    <div class="works-num">01</div>
+                    <div class="works-icon">🎧</div>
+                    <h4>Neural Ear</h4>
+                    <p>Listens to underwater microphones and filters out natural ocean sounds to isolate ship noise</p>
+                    <div class="works-analogy">🔗 Like noise-cancelling headphones in reverse</div>
+                </div>
+                <div class="works-step">
+                    <div class="works-num">02</div>
+                    <div class="works-icon">🧬</div>
+                    <h4>Acoustic DNA</h4>
+                    <p>Creates a unique fingerprint of the ship from its sound pattern — engine type, propeller rhythm
+                    </p>
+                    <div class="works-analogy">🔗 Like Shazam identifying a song</div>
+                </div>
+                <div class="works-step">
+                    <div class="works-num">03</div>
+                    <div class="works-icon">📡</div>
+                    <h4>AIS Check</h4>
+                    <p>Checks if the ship has its tracking system on, or if it's deliberately hiding</p>
+                    <div class="works-analogy">🔗 Like checking if a car's license plate is visible</div>
+                </div>
+                <div class="works-step">
+                    <div class="works-num">04</div>
+                    <div class="works-icon">📻</div>
+                    <h4>AI Negotiator</h4>
+                    <p>Fetches relevant ocean laws and uses AI to generate a professional radio warning</p>
+                    <div class="works-analogy">🔗 Like a traffic cop citing the exact law you broke</div>
+                </div>
+                <div class="works-step">
+                    <div class="works-num">05</div>
+                    <div class="works-icon">📒</div>
+                    <h4>Blue Ledger</h4>
+                    <p>Records the violation and lowers the ship's Acoustic Credit Score permanently</p>
+                    <div class="works-analogy">🔗 Like penalty points on a driving license</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SDG 14 -->
+        <div class="sdg-banner">
+            <div class="sdg-icon">🎯</div>
+            <div class="sdg-text">
+                <h4>United Nations SDG 14 — Life Below Water</h4>
+                <p>Right now, there's <strong>no automated system</strong> that detects and responds to underwater noise
+                    pollution. Ships break acoustic boundaries every day and nothing happens. ZONAR changes that — it
+                    gives the ocean a <strong>voice</strong> and an <strong>enforcer</strong>.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section class="team-section" id="team">
+        <h2 class="section-title">The Team</h2>
+        <p class="section-desc">Built with passion for the oceans</p>
+        <div class="team-grid">
+            <div class="team-card">
+                <div class="team-avatar">SV</div>
+                <h4>Shathrack V</h4>
+            </div>
+            <div class="team-card">
+                <div class="team-avatar">DK</div>
+                <h4>Divyesh Kumar N</h4>
+            </div>
+            <div class="team-card">
+                <div class="team-avatar">MA</div>
+                <h4>Mowshmitha A</h4>
+            </div>
+            <div class="team-card">
+                <div class="team-avatar">SS</div>
+                <h4>Sri Varshini S</h4>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <p>🌊 ZONAR — Zonal Ocean Noise Analysis & Response | Build2Gether Hackathon 2026</p>
+            <p class="footer-sub">Restoring SDG 14 Ecological Integrity Through Digital Sovereignty</p>
+        </div>
+    </footer>
+
+    <script src="/static/app.js"></script>
+</body>
+
+</html>

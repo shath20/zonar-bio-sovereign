@@ -1,4 +1,4 @@
-# Bio-Sovereign Radio Protocol
+# ZONAR — Zonal Ocean Noise Analysis & Response
 
 A decentralized acoustic defense network that restores SDG 14 ecological integrity by granting marine life "Digital Sovereignty" through active, real-time enforcement of acoustic boundaries.
 
@@ -11,20 +11,21 @@ A decentralized acoustic defense network that restores SDG 14 ecological integri
 - **Autonomous Negotiator** — Gemini-powered SMCP-compliant VHF radio advisories
 - **Blue Ledger** — SQLite-backed Acoustic Credit Score with risk premium tiers
 - **API Bridge** — FastAPI server for n8n/webhook integration
+- **Live Dashboard** — Ocean-themed interactive demo with audio playback
 
 ## Quick Start
 
 ```bash
 pip install -r requirements.txt
 cp .env.example .env   # Add your Gemini API key
-python src/main.py     # Run the full pipeline
-python src/api_bridge.py  # Start the API server
+python src/api_bridge.py  # Start dashboard + API on http://localhost:8000
 ```
 
 ## API Endpoints
 
 | Method | Endpoint | Description |
 |--------|----------|-------------|
+| GET | `/` | Interactive Dashboard |
 | GET | `/health` | Health check |
 | POST | `/trigger-breach` | Trigger acoustic breach protocol |
 | GET | `/ledger/{vessel_id}` | Query vessel Acoustic Credit Score |
@@ -39,6 +40,10 @@ src/
 ├── config.py            # Central configuration
 ├── main.py              # Pipeline orchestrator
 └── api_bridge.py        # FastAPI for n8n
+static/
+├── index.html           # Dashboard UI
+├── style.css            # Ocean theme
+└── app.js               # Interactive engine
 ```
 
 ## License

@@ -1,4 +1,4 @@
-"""Bio-Sovereign Radio Protocol - Main Orchestrator."""
+"""ZONAR - Zonal Ocean Noise Analysis & Response - Main Orchestrator."""
 import os
 from src.audio_processing.preprocessor import NeuralEarPreprocessor
 from src.audio_processing.fingerprint import AcousticDNAExtractor
@@ -8,12 +8,13 @@ from src.enforcement.ledger import BlueLedger
 from src.config import DATA_DIR
 
 
-class BioSovereignProtocol:
+class ZonarProtocol:
     """Central pipeline orchestrator."""
 
     def __init__(self):
         print("=" * 60)
-        print("  BIO-SOVEREIGN RADIO PROTOCOL - Initializing...")
+        print("  ZONAR - Zonal Ocean Noise Analysis & Response")
+        print("  Initializing...")
         print("=" * 60)
 
         self.preprocessor = NeuralEarPreprocessor()
@@ -109,7 +110,7 @@ if __name__ == "__main__":
         from src.utils import create_dummy_audio
         audio_file = create_dummy_audio()
 
-    protocol = BioSovereignProtocol()
+    protocol = ZonarProtocol()
     result = protocol.process_incident(audio_file)
 
     print("\n" + "=" * 60)
