@@ -1,0 +1,13 @@
+librosa
+numpy
+scipy
+tensorflow
+tensorflow-hub
+matplotlib
+langchain
+langchain-google-genai
+chromadb
+python-dotenv
+pydub
+fastapi
+uvicorn
