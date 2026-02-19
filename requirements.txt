@@ -1,13 +1,11 @@
-librosa
-numpy
-scipy
-tensorflow
-tensorflow-hub
-matplotlib
-langchain
-langchain-google-genai
-chromadb
-python-dotenv
-pydub
-fastapi
-uvicorn
+fastapi==0.109.2
+uvicorn==0.27.1
+python-multipart==0.0.9
+python-dotenv==1.0.1
+numpy==1.26.4
+scipy==1.12.0
+matplotlib==3.8.3
+# Librosa is optional but useful if it works; app handles its absence
+librosa==0.10.1
+# Note: Heavy libs (tensorflow, chromadb, torch) excluded for Vercel size limits.
+# The app handles their absence via Lite Mode.

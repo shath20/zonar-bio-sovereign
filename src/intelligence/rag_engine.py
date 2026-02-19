@@ -1,26 +1,86 @@
-"""Legal Cortex - RAG Knowledge Base using ChromaDB."""
-import chromadb
+try:
+    import chromadb
+    HAS_CHROMA = True
+except ImportError:
+    HAS_CHROMA = False
+
 from src.config import CHROMA_DB_PATH
 
 
 class LegalCortexRAG:
-    """Manages UNCLOS/MARPOL/NOAA vector store for grounding AI advisories."""
+    """
+    Manages UNCLOS/MARPOL/NOAA knowledge base.
+    Features 'Lite Mode' (Mock) for Vercel/Serverless where ChromaDB (heavy) is unavailable.
+    """
 
     def __init__(self, db_path=CHROMA_DB_PATH):
-        self.client = chromadb.PersistentClient(path=db_path)
-        self.collection = self.client.get_or_create_collection(
-            name="maritime_legal_bio"
-        )
+        self.mock_mode = not HAS_CHROMA
+        
+        if HAS_CHROMA:
+            try:
+                self.client = chromadb.PersistentClient(path=db_path)
+                self.collection = self.client.get_or_create_collection("maritime_legal_bio")
+            except Exception as e:
+                print(f"[RAG] ChromaDB init failed ({e}). Falling back to Lite Mode.")
+                self.mock_mode = True
+        
+        if self.mock_mode:
+            print("[RAG] Running in LITE MODE (In-Memory). Heavy vector DB disabled.")
+            self.docs = []
 
     def ingest(self, doc_id, content, metadata):
-        """Adds a document to the vector store."""
-        self.collection.add(
-            documents=[content], metadatas=[metadata], ids=[doc_id]
-        )
+        """Adds a document to the store."""
+        if not self.mock_mode:
+            self.collection.add(
+                documents=[content], metadatas=[metadata], ids=[doc_id]
+            )
+        else:
+            # In-memory storage for Lite Mode
+            # Check if exists (simple dedup)
+            if not any(d['id'] == doc_id for d in self.docs):
+                self.docs.append({"id": doc_id, "content": content, "meta": metadata})
 
     def query(self, text, n_results=3):
         """Retrieves relevant legal/bio context."""
-        return self.collection.query(query_texts=[text], n_results=n_results)
+        if not self.mock_mode:
+            return self.collection.query(query_texts=[text], n_results=n_results)
+        else:
+            # Lite Mode: Keyword relevance scoring
+            text_lower = text.lower()
+            scored = []
+            
+            for d in self.docs:
+                score = 0
+                content_lower = d["content"].lower()
+                
+                # Bonus for species match if explicitly mentioned
+                if d["meta"].get("species", "").lower() in text_lower:
+                    score += 10
+                
+                # Bonus for exact article/regulation match
+                id_lower = d["id"].lower()
+                if id_lower in text_lower:
+                    score += 15
+                
+                # Keyword overlap
+                query_words = text_lower.split()
+                for word in query_words:
+                    if len(word) > 3 and word in content_lower:
+                        score += 3
+                
+                if score > 0:
+                    scored.append((score, d))
+            
+            # Sort by score desc
+            scored.sort(key=lambda x: x[0], reverse=True)
+            top = scored[:n_results]
+            
+            # Return in ChromaDB compatible format
+            return {
+                "documents": [[d["content"] for s, d in top]],
+                "metadatas": [[d["meta"] for s, d in top]],
+                "ids": [[d["id"] for s, d in top]]
+            }
 
 
 def seed_knowledge(rag):

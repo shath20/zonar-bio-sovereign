@@ -1,11 +1,29 @@
 """ZONAR - Zonal Ocean Noise Analysis & Response - Main Orchestrator."""
 import os
+import io
+import base64
+import random
+import numpy as np
 from src.audio_processing.preprocessor import NeuralEarPreprocessor
 from src.audio_processing.fingerprint import AcousticDNAExtractor
 from src.intelligence.rag_engine import LegalCortexRAG, seed_knowledge
 from src.intelligence.negotiator import AutonomousNegotiator
 from src.enforcement.ledger import BlueLedger
 from src.config import DATA_DIR
+
+# Demo ocean locations (lat, lng, zone name)
+OCEAN_ZONES = [
+    (8.7, 76.9, "Lakshadweep Sea - Whale Migration Corridor"),
+    (6.9, 79.8, "Sri Lanka Southern Coast - Blue Whale Zone"),
+    (12.2, 74.8, "Malabar Coast - Olive Ridley Nesting"),
+    (15.4, 73.8, "Goa Offshore - Humpback Corridor"),
+    (20.0, 70.0, "Gujarat Marine Sanctuary"),
+    (3.5, 72.8, "Maldives EEZ - Sperm Whale Zone"),
+    (-6.2, 71.5, "Chagos Archipelago MPA"),
+    (10.5, 72.2, "Arabian Sea Deep Trench"),
+    (1.2, 103.8, "Singapore Strait - High Traffic"),
+    (13.1, 80.3, "Chennai Coast - Turtle Nesting Zone"),
+]
 
 
 class ZonarProtocol:
@@ -89,6 +107,14 @@ class ZonarProtocol:
             advisory=advisory[:200]
         )
 
+        # Encode spectrogram as base64 PNG for frontend
+        spec_b64 = self._encode_spectrogram(spec)
+
+        # Pick a random ocean zone for map visualization
+        zone = random.choice(OCEAN_ZONES)
+        lat = zone[0] + random.uniform(-0.5, 0.5)
+        lng = zone[1] + random.uniform(-0.5, 0.5)
+
         result = {
             "vessel": vessel_name,
             "vessel_id": vessel_id,
@@ -97,10 +123,46 @@ class ZonarProtocol:
             "advisory": advisory,
             "acoustic_credit_score": acs,
             "spectrogram_shape": spec.shape,
+            "spectrogram_b64": spec_b64,
+            "location": {
+                "lat": round(lat, 4),
+                "lng": round(lng, 4),
+                "zone": zone[2]
+            }
         }
 
         print("\n[COMPLETE] Incident processed successfully.")
         return result
+
+    @staticmethod
+    def _encode_spectrogram(spec):
+        """Encode a log-mel spectrogram as a base64 PNG image."""
+        try:
+            import matplotlib
+            matplotlib.use('Agg')
+            import matplotlib.pyplot as plt
+
+            fig, ax = plt.subplots(1, 1, figsize=(8, 2.5), dpi=100)
+            ax.imshow(spec, aspect='auto', origin='lower',
+                      cmap='inferno', interpolation='bilinear')
+            ax.set_xlabel('Time Frame', color='white', fontsize=8)
+            ax.set_ylabel('Mel Band', color='white', fontsize=8)
+            ax.tick_params(colors='white', labelsize=6)
+            fig.patch.set_facecolor('#0a0e27')
+            ax.set_facecolor('#0a0e27')
+            for spine in ax.spines.values():
+                spine.set_color('#1a3a4a')
+            plt.tight_layout(pad=0.5)
+
+            buf = io.BytesIO()
+            fig.savefig(buf, format='png', facecolor='#0a0e27',
+                        edgecolor='none', bbox_inches='tight')
+            plt.close(fig)
+            buf.seek(0)
+            return base64.b64encode(buf.read()).decode('utf-8')
+        except Exception as e:
+            print(f"[SPEC] Encoding error: {e}")
+            return None
 
 
 if __name__ == "__main__":

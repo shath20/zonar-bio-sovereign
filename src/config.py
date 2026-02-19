@@ -6,7 +6,13 @@ load_dotenv()
 
 # Project Paths
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-DATA_DIR = os.path.join(BASE_DIR, "data")
+
+# Vercel / Serverless Environment Check
+if os.environ.get("VERCEL") or os.environ.get("AWS_LAMBDA_FUNCTION_NAME"):
+    # Read-only file system, write to /tmp
+    DATA_DIR = "/tmp"
+else:
+    DATA_DIR = os.path.join(BASE_DIR, "data")
 
 # Audio Processing
 SAMPLE_RATE = 16000

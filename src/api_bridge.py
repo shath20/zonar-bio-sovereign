@@ -45,6 +45,21 @@ async def trigger_breach(trigger: BreachTrigger):
     return {"status": "ADVISORY_BROADCAST", "result": result}
 
 
+@app.get("/ledger")
+async def get_all_vessels():
+    """Query the Blue Ledger for all vessels."""
+    p = get_protocol()
+    return p.ledger.get_all_vessels()
+
+
+@app.delete("/ledger")
+async def clear_ledger():
+    """Clear all records from the Blue Ledger."""
+    p = get_protocol()
+    p.ledger.clear_ledger()
+    return {"status": "cleared", "message": "All ledger records deleted."}
+
+
 @app.get("/ledger/{vessel_id}")
 async def get_vessel_status(vessel_id: str):
     """Query the Blue Ledger for a vessel's Acoustic Credit Score."""
