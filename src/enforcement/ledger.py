@@ -2,7 +2,7 @@
 import sqlite3
 import os
 from datetime import datetime
-from src.config import DATA_DIR
+from src.config import WRITABLE_DIR
 
 FREEZE_THRESHOLD = 15  # ACS at or below this = license frozen
 
@@ -11,8 +11,8 @@ class BlueLedger:
     """Tracks vessel Acoustic Credit Scores (ACS) in a SQLite ledger."""
 
     def __init__(self, db_name="blue_ledger.db"):
-        os.makedirs(DATA_DIR, exist_ok=True)
-        self.db_path = os.path.join(DATA_DIR, db_name)
+        os.makedirs(WRITABLE_DIR, exist_ok=True)
+        self.db_path = os.path.join(WRITABLE_DIR, db_name)
         self._init_db()
 
     def _init_db(self):

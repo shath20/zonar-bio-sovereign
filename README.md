@@ -2,6 +2,8 @@
 
 A decentralized acoustic defense network that restores SDG 14 ecological integrity by granting marine life "Digital Sovereignty" through active, real-time enforcement of acoustic boundaries.
 
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fshath20%2Fzonar-bio-sovereign)
+
 ## The Problem
 
 Every day, 60,000+ cargo ships cross the world's oceans. Their engine noise (20–200 Hz) directly overlaps with baleen whale communication bands, causing **acoustic masking** that prevents mothers from finding calves. Up to **30% of ships** disable their AIS transponders — becoming invisible **Ghost Vessels** with zero accountability.
@@ -81,6 +83,18 @@ static/
 ├── style.css            # Ocean theme
 └── app.js               # Interactive engine
 ```
+
+## Deployment & "Lite Mode" Architecture
+
+ZONAR is architected to run anywhere — from high-performance local rigs to constrained serverless clouds.
+
+| Feature | **Local (Full Power)** | **Vercel (Lite Mode)** |
+|:---|:---|:---|
+| **Audio Analysis** | Real-time `Librosa` + `TensorFlow` spectral decomposition | Lightweight Mock Engine (prevents timeout/memory crash) |
+| **RAG Knowledge** | `ChromaDB` Vector Store (Semantic Search) | In-Memory Keyword Matcher (Zero-dependency) |
+| **Database** | Persistent `blue_ledger.db` in `./data` | Ephemeral `blue_ledger.db` in `/tmp` (Read-only OS compatible) |
+
+The system **automatically detects** the environment and switches modes. This ensures the dashboard is **always live and responsive** for demos, even on free-tier hosting limits (250MB), without changing a single line of code.
 
 ## Team
 
